@@ -59,7 +59,7 @@ void Shape(double a,double b,double*g,double tol,int n,double c,double h)
     double *x[10];
 
     char S[20];
-    sprintf(S,"MobiusBandGDfine%f.txt",a);
+    sprintf(S,"MobiusBandGDfine_%f_%f.txt",a, b);
     FILE*fp;
     fp=fopen(S,"w");                              //file pointer to output final results.
 
