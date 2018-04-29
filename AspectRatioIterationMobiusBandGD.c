@@ -26,16 +26,16 @@ double absmax(double*);                         //Maximum absolte value in the a
 double mod(double);                            //absolute value.
 void Shape(double,double,double*,double,int,double,double);
 
-main()
+int main()
 {
     int N;
     double a,b,tolerance,FDiff,GDStep;
     a=0.5;
     b=0.5;
-    tolerance=0.001;
+    tolerance=0.005;
     N=1000;
     FDiff=0.0001;
-    GDStep=0.00001;
+    GDStep=0.0001;
 
     double g[6];
     g[0]=-1;                    //initial guess values.
@@ -45,10 +45,12 @@ main()
     g[4]=0;
     g[5]=0.5;
 
-    while(a<=1.5)
+    while(a<=5000)
     {
+        printf("Comuting shape for a = %f and b = %f\n", a, b);
         Shape(a,b,g,tolerance,N,GDStep,FDiff);
-        a+=0.1;                     
+        printf("Incrementing value of a\n");
+        a=a*10;
     }
 }
 
@@ -83,6 +85,7 @@ void Shape(double a,double b,double*g,double tol,int n,double c,double h)
         printf("%f\n",absmax(f));
         if(absmax(f)<tol)                     //break when absolute maxximum error is lower than the threshold.
         break;
+        
         for(i=0;i<6;i++)
         {
             for(j=0;j<6;j++)                 //for numerical differentiation,we are using (f(x+h)-f(x))/h.
@@ -105,6 +108,8 @@ void Shape(double a,double b,double*g,double tol,int n,double c,double h)
         }
     }
 
+    printf("Loop terminated\n");
+
     for(i=0;i<10;i++)                          //Output to a file.
     {
         for(j=0;j<n;j++)
@@ -113,6 +118,15 @@ void Shape(double a,double b,double*g,double tol,int n,double c,double h)
         }
         fprintf(fp,"\n");
     }
+    printf("Completed computation for a = %f, b = %f\n", a, b);
+    
+    fclose(fp);
+    printf("Output file closed\n");
+
+    for(i=0;i<10;i++)
+    free(x[i]);
+    printf("Freed the array\n");
+
     return;
 }
 
